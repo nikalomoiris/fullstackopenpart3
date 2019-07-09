@@ -69,7 +69,7 @@ app.delete('/api/persons/:id', (req, res) => {
     const id = Number(req.params.id);
     console.log('got id', id);
     persons = persons.filter(person => person.id !== id)
-    console.log('removed person');
+    console.log('removed person', persons);
 
     res.status(204).end();
 })
