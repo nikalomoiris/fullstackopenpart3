@@ -20,7 +20,7 @@ let persons = [
     {
         "name": "Nikos Kalomiris",
         "phone": "39-23-6423123",
-        "id": 4
+        "id": 5
     },
     {
         "name": "dfdok",
@@ -53,6 +53,7 @@ app.get('/info', (req, res) => {
 });
 
 app.get('/api/persons/:id', (req, res) => {
+    console.log('starting retrieval of person');
     const id = Number(req.params.id);
     const person = persons.find(person => person.id === id);
 
@@ -61,6 +62,16 @@ app.get('/api/persons/:id', (req, res) => {
     } else {
         res.status(404).end();
     }
+})
+
+app.delete('/api/persons/:id', (req, res) => {
+    console.log('starting delete');
+    const id = Number(req.params.id);
+    console.log('got id', id);
+    persons = persons.filter(person => person.id !== id)
+    console.log('removed person');
+
+    res.status(204).end();
 })
 
 const PORT = 3001;
