@@ -1,5 +1,8 @@
 const express = require('express');
 const app = express();
+const bodyParser = require('body-parser');
+
+app.use(bodyParser.json());
 
 let persons = [
     {
@@ -72,6 +75,16 @@ app.delete('/api/persons/:id', (req, res) => {
     console.log('removed person', persons);
 
     res.status(204).end();
+})
+
+app.post('/api/persons', (req, res) => {
+    const generatedId = Math.floor(Math.random() * 10000);
+    const newPerson = req.body;
+    console.log(req.body);
+    newPerson.id = generatedId;
+    persons = persons.concat(newPerson);
+    console.log('added new person', newPerson, persons);
+    res.json(newPerson);
 })
 
 const PORT = 3001;
