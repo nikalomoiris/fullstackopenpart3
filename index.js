@@ -79,6 +79,11 @@ app.delete('/api/persons/:id', (req, res) => {
 
 app.post('/api/persons', (req, res) => {
     const generatedId = Math.floor(Math.random() * 10000);
+    if (!req.body.name || !req.body.phone) {
+        return res.status(400).json({ error: 'missing name or phone number' });
+    } else if (persons.map(person => person.name).includes(req.body.name)) {
+        return res.status(400).json({ error: 'name must be unique' });
+    }
     const newPerson = req.body;
     console.log(req.body);
     newPerson.id = generatedId;
