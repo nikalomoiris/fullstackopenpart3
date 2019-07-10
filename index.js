@@ -76,14 +76,12 @@ app.get('/api/persons/:id', (req, res, next) => {
         .catch(error => next(error));
 })
 
-app.delete('/api/persons/:id', (req, res) => {
-    console.log('starting delete');
-    const id = Number(req.params.id);
-    console.log('got id', id);
-    persons = persons.filter(person => person.id !== id)
-    console.log('removed person', persons);
-
-    res.status(204).end();
+app.delete('/api/persons/:id', (req, res, next) => {
+    Person.findByIdAndRemove(req.params.id)
+        .then(result => {
+            res.status(204).end();
+        })
+        .catch(error => next(error));
 })
 
 app.post('/api/persons', (req, res) => {
