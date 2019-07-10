@@ -84,7 +84,7 @@ app.delete('/api/persons/:id', (req, res, next) => {
         .catch(error => next(error));
 })
 
-app.post('/api/persons', (req, res) => {
+app.post('/api/persons', (req, res, next) => {
     const body = req.body;
     if (!body.name || !body.phone) {
         return res.status(400).json({ error: 'missing name or phone number' });
@@ -99,6 +99,7 @@ app.post('/api/persons', (req, res) => {
     person.save().then(savedPerson => {
         res.json(savedPerson.toJSON());
     })
+        .catch(error => next(error));
 })
 
 const errorHandler = (error, request, response, next) => {
